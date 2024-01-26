@@ -3,11 +3,13 @@ import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth } from "../services/firebaseConfig";
 import { Link } from 'react-router-dom';
 
+
 export default function Register() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [emailExistente, setEmailExistente] = useState(false);
+  const [mensagem, setMensagem] = useState('');
+
   const [
     createUserWithEmailAndPassword,
     user,
@@ -15,9 +17,10 @@ export default function Register() {
     error,
   ] = useCreateUserWithEmailAndPassword(auth);
 
-  function handleRegister() {
-      createUserWithEmailAndPassword(email, password)
-      console.log(user)
+  function handleRegister(e) {
+    e.preventDefault();
+    createUserWithEmailAndPassword(email, password);
+      
   }
 
 
@@ -33,7 +36,7 @@ export default function Register() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           />
-          {emailExistente ? <p>Email Já cadastrado</p> : ""}
+          {mensagem}
         </div>
         <div>
           <label>Senha</label>
